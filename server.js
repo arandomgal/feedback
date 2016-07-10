@@ -113,7 +113,9 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        //self.app = express.createServer();
+		self.app = express();
+		self.app.set('port', (process.env.PORT || 5000));
 		self.app.use(express.static(__dirname));
 		self.app.use(express.bodyParser());
 
@@ -143,9 +145,9 @@ var SampleApp = function() {
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
+        self.app.listen(self.app.get('port'), function() {
             console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
+                        Date(Date.now() ), self.app.get('port'));
         });
     };
 
